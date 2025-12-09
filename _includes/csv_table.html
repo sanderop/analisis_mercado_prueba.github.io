@@ -1,0 +1,19 @@
+{%- assign parts = include.data | split: '.' -%}
+{%- assign dataset = site.data -%}
+{%- for p in parts -%}{%- assign dataset = dataset[p] -%}{%- endfor -%}
+
+{%- assign cols = include.cols | split: ',' -%}
+<table>
+  <thead>
+    <tr>{%- for c in cols -%}<th>{{ c | strip }}</th>{%- endfor -%}</tr>
+  </thead>
+  <tbody>
+    {%- assign rows = dataset -%}
+    {%- if include.limit -%}{%- assign rows = dataset | slice: 0, include.limit -%}{%- endif -%}
+    {%- for r in rows -%}
+    <tr>
+      {%- for c in cols -%}<td>{{ r[c | strip] }}</td>{%- endfor -%}
+    </tr>
+    {%- endfor -%}
+  </tbody>
+</table>
