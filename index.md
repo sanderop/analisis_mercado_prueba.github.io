@@ -27,7 +27,7 @@ En particular, se plantean los siguientes objetivos específicos:
 
 ## 1. Metodología
 
-### 2.1. Dataset
+### 1.1. Dataset
 
 Se utilizó el dataset data.xlsx en formato excel con la siguiente distribución de hojas:
 - **Ordenes**: 51290 filas x 14 columnas
@@ -37,9 +37,9 @@ Se utilizó el dataset data.xlsx en formato excel con la siguiente distribución
 El dataset presenta 28 valores nulos en Nombre_del_cliente y 1 Ventas, Cantidad, Descuento, Ganancia y Costo_de_envío. Además, presenta un valor atípico en País para  'Colombia-'. 
 2 Valores atípicos para las columnas de Fecha_de_la_orden 2034.
 
-### 2.2. Preprocesamiento
+### 1.2. Preprocesamiento
 
-1. **Valores nulos**: 
+- **Valores nulos**: 
 
 Cálculo de asimetría de las columnas:
 
@@ -53,12 +53,12 @@ Se sustituirán los valores nulos con la mediana del conjunto de datos, dado que
 
 Para los clientes, al ser un dato categórico, se sustituirá por un nombre genérico: Cliente_(# index).
 
-2. **Valores atípicos**: 
-![Distribución año](assets/figures/01_exploratory/01_distribucion_fecha.png)
+- **Valores atípicos**: 
+![Distribución año](assets/figures/01_exploratory/03_distribucion_fecha.png)
 
 La distribución de los datos se encuentran entre el año 2021 y 2024. Existen dos valores atípicos para el 2034. Por su baja frecuencia y ausencia de continuidad temporal, se excluirán del análisis para no distorsionar tendencias y modelos.
 
-3. **Métricas adicionales**: 
+- **Métricas adicionales**: 
 Se añaden métricas de Margen_beneficio, Precio_unitario y Ventas_netas.
 ![Matriz Correlación](assets/figures/01_exploratory/02_matriz_correlacion.png)
 Se realiza la matriz para identificar la correlación de las nuevas métricas añadidas. Revelando que Margen_beneficio tiene relación inversa fuerte con los descuentos, el precio unitario relación directa con el precio y precio_unitario, y las ventas_netas tiene una relación directa con ganancia y costo_de_envio.
@@ -73,18 +73,18 @@ Observamos una tendencia creciente, con un patrón de picos en meses como junio,
 
 ### 2.1. Modelo pronóstico de ventas
 
-1. **Modelo SARIMA**: Se aplicó el modelo SARIMA para la predicción de los siguientes meses en la temporalidad de órdenes de compra. Las variables a tener en cuenta fueron las Ventas, Ganancia y ID_orden (cuenta de órdenes de compra).
+- **Modelo SARIMA**: Se aplicó el modelo SARIMA para la predicción de los siguientes meses en la temporalidad de órdenes de compra. Las variables a tener en cuenta fueron las Ventas, Ganancia y ID_orden (cuenta de órdenes de compra).
 
-2. **Búsqueda por grilla**: Se aplicó búsqueda por grilla para encontrar los parámetros óptimos para el modelo SARIMA.
+- **Búsqueda por grilla**: Se aplicó búsqueda por grilla para encontrar los parámetros óptimos para el modelo SARIMA.
 
 
 ### 2.2. Entrenamiento y Evaluación
 
-**Búsqueda en grilla**
-- 324 combinaciones probadas. Se excluyeron resultados en AIC y BIC extremos (< -100, > 1000) y valores con un MAPE inferior a 50%.
-## Comparación de Modelos SARIMA
+- **Búsqueda en grilla**
+324 combinaciones probadas. Se excluyeron resultados en AIC y BIC extremos (< -100, > 1000) y valores con un MAPE inferior a 50%.
+Comparación de Modelos SARIMA
 
-| Variable   | Modelo                         | AIC    | BIC    | MAPE     |
+| Variable  | Modelo                          | AIC    | BIC    | MAPE     |
 |-----------|---------------------------------|--------|--------|----------|
 | Ventas    | (0,1,0) × (2,1,1,12)            | 31.19  | 23.19  | 9.78%    |
 | Ganancia  | (2,0,0) × (0,1,2,12)            | 30.28  | 20.28  | 21.67%   |
@@ -165,14 +165,14 @@ Existen muchas ventas sin ganancias, con descuentos altos.
 
 Se realizó una distribución por categoría de precio tomando en cuenta el modelo BGC (Boston consulting group), agrupando los productos en cuatro categorías (Estrellas, Vacas Lecheras, Interrogación, Perros). Estos dependerán de sus ventas_totales y margen_promedio en comparación con la mediana:
 
-- >= mediana_margen, Estrella.
-- >= mediana_ventas y < mediana_margen, Vacas Lecheras.
-- < mediana_ventas y < mediana_margen, Perro.
-- Cualquier otro caso, interrogante.
+- '>= mediana_margen, Estrella'.
+- '>= mediana_ventas y < mediana_margen, Vacas Lecheras'.
+- '< mediana_ventas y < mediana_margen, Perro'.
+- 'Cualquier otro caso, interrogante'.
 
 Aproximadamente el 90% de los productos se encuentran entre Estrella y vacas lecheras, lo que indica que la mayoría de productos generan margen para la empresa.
 
-![Desempeño productos](assets/figures/02_features/09_producto.png)
+![Desempeño productos](assets/figures/02_features/09_productos.png)
 El top de productos por ganancia y ventas están encabezados por el componente tecnológico, con la impresora Canon imageClass 2200. 
 Por su parte, la matriz de productos demuestra que existen todavía muchos productos con margen de beneficio negativos. Esto responde a que el margen global de ganancias no supere el 11%. Se debe establecer estrategias alrededor de los costos y precios de estos productos.
 
