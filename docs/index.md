@@ -67,7 +67,7 @@ Se realiza la matriz para identificar la correlación de las nuevas métricas a�
 
 Se realiza una descomposición temporal para determinar patrones de temporalidad en los datos:
 
-![Descomposición temporal](assets/figures/02_features/01_descomposicion_temporal.png)
+![Descomposición temporal](assets/figures/01_exploratory/01_descomposicion_temporal.png)
 
 Observamos una tendencia creciente, con un patrón de picos en meses como junio, septiembre y crecimiento constantes de noviembre a diciembre, con caídas en enero y prolongación para febrero, disminución en abril y otra caída fuerte en octubre.
 
@@ -107,8 +107,9 @@ Se captó el patrón asociado a la temporalidad, con un respectivo incremento de
 - El dataset fue normalizado a través de StandardScaler para la variables que utilizará el modelo: 'Ventas_totales', 'Cantidad_total', 'Ganancia_total', 'Num_ordenes'
 
 **K óptimo de clusters**
-Se hace uso del método del codo para encontrar k óptimo:
+- Se hace uso del método del codo para encontrar k óptimo:
 ![método codo](assets/figures/02_features/05_codo.png)
+
 Se determina hacer uso de 4 clusters.
 
 **Métodos de clustering**
